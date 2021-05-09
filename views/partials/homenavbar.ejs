@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">
+        GuiaPress
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a href="/" class="nav-link">Home</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Categorias
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <% categories.forEach(category => { %>
+                        <a class="dropdown-item" href="/category/<%= category.slug %>/1"><%= category.title %></a>
+                    <% }); %>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+
+            <% if(!isAuthenticated){ %>
+                <li class="nav-item">
+                    <a href="/login" class="nav-link btn btn-success">Login</a>
+                </li>
+            <% } else { %>
+                <form class="form-inline">
+                    <a href="/admin" class="btn btn-success mr-2">Admin</a>
+                    <a href="/logout" class="btn btn-danger">Logout</a>
+                </form>
+            <% } %>
+
+        </ul>
+    </div>
+</nav>

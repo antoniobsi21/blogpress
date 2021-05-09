@@ -1,0 +1,73 @@
+<%- include('../../partials/header') %>
+
+<!-- THIS VIEW IS NOT BEING USSED RIGHT NOW, THE VIEW THAT RENDER THE LIST OF ARTICLES IS "page.ejs" -->
+
+<body>
+    <%- include('../../partials/navbar') %>
+
+    <div class="container">
+        <hr>
+        <h2>Artigos</h2>
+        <a class="btn btn-success" href="/admin/articles/new">Adicionar artigo</a>
+        <hr>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Slug</th>
+                    <th>Categoria (id)</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% articles.forEach(article => { %>
+                    <tr>
+                        <th><%= article.id; %></th>
+                        <th><%= article.title; %></th>
+                        <th><%= article.slug; %></th>
+                        <th><%= article.category.title + ' (' + article.categoryId + ')' %></th>
+                        <th>
+                            <a class="btn btn-warning" href="/admin/articles/edit/<%= article.id %>">Editar</a>
+                            <a class="btn btn-danger" onclick="confirmDelete('<%= article.title %>', <%= article.id %>, event)" data-toggle="modal" data-target="#confirmDeleteModal">Deletar</a>
+                        </th>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-danger">
+                    <h5 class="modal-title">Cuidado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Você tem certeza que deseja deletar o artigo com título "<span class="font-weight-bold" id="modal-item-title"></span>"?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="modalSubmit">Deletar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmDelete(title, id, event) {
+            $('#modal-item-title').html(title);
+
+            $('#modalSubmit').click(function() {
+                location.href = '/admin/articles/delete/' + id;
+            });
+        }
+    </script>
+</body>
+
+<%- include('../../partials/footer') %>

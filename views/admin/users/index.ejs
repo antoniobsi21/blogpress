@@ -1,0 +1,67 @@
+<%- include('../../partials/header') %>
+
+<body>
+    <%- include('../../partials/navbar') %>
+
+    <div class="container">
+        <hr>
+        <h2>Usuários</h2>
+        <a class="btn btn-success" href="/admin/users/new">Adicionar usuário</a>
+        <hr>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% users.forEach(user => { %>
+                    <tr>
+                        <th><%= user.id; %></th>
+                        <th><%= user.email; %></th>
+                        <th>
+                            <a class="btn btn-warning text-light" href="/admin/users/edit/<%= user.id %>">Editar</a>
+                            <a class="btn btn-danger my-2 my-sm-0" onclick="confirmDelete('<%= user.email %>', <%= user.id %>, event)" data-toggle="modal" data-target="#confirmDeleteModal">Deletar</a>
+                        </th>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-danger">
+                    <h5 class="modal-title">Cuidado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Você tem certeza que deseja deletar o usuário de email "<span class="font-weight-bold" id="modal-item-title"></span>"?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="modalSubmit">Deletar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmDelete(title, id, event) {
+            $('#modal-item-title').html(title);
+
+            $('#modalSubmit').click(function() {
+                location.href = '/admin/users/delete/' + id;
+            });
+        }
+    </script>
+</body>
+
+<%- include('../../partials/footer') %>

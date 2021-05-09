@@ -1,0 +1,68 @@
+<%- include('../../partials/header') %>
+
+<body>
+    <%- include('../../partials/navbar') %>
+
+    <div class="container">
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                <h2>Edição de artigo</h2>
+            </div>
+
+            <div class="card-body">
+                <form action="/articles/update" method="POST">
+                    <div class="form-group">
+                        <label for="id">ID</label>
+                        <input type="text" id="id" class="form-control" placeholder="ID da categoria" value="<%= article.id %>" disabled>
+                        <small class="form-text text-danger">Não é permitido edição desse valor por uma questão de integridade.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Título</label>
+                        <input type="text" name="title" id="title" class="form-control" placeholder="Título da categoria" value="<%= article.title %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Categoria</label>
+                        <select class="custom-select" name="category" id="category" required>
+                            <option selected>Selecione uma categoria ...</option>
+                            <% categories.forEach(category => { %>
+                                <% if(category.id == article.categoryId) { %>
+                                    <option value="<%= category.id %>" selected><%= category.title %></option>
+                                <% } else { %>
+                                    <option value="<%= category.id %>"><%= category.title %></option>
+                                <% } %>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="body">Corpo</label>
+                        <textarea class="form-control" name="body" id="body" rows="3" placeholder="Escreva seu artigo">aaaaaaaaa</textarea>
+                    </div>
+                    <input type="hidden" name="id" value="<%= article.id %>">
+                    <button type="submit" class="btn btn-success">Atualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="bodyContent" style="display:none">
+        <%- article.body %>
+    </div>
+</body>
+
+<%- include('../../partials/footer') %>
+
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        language: 'pt_BR',
+        selector: '#body',
+        plugins: [
+            'autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+        ],
+        height: 480,
+        init_instance_callback: () => {
+            tinymce.get('body').setContent($('#bodyContent').html());
+        }
+    });
+</script>

@@ -1,0 +1,36 @@
+<%- include('../../partials/header') %>
+
+<body>
+    <%- include('../../partials/navbar') %>
+
+    <div class="container">
+        <hr>
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Editar usuário</h2>
+            </div>
+            <div class="card-body">
+                <form action="/users/update" method="POST">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="id">ID</label>
+                            <input type="text" id="id" class="form-control" placeholder="ID da categoria" value="<%= user.id %>" disabled>
+                            <small class="form-text text-danger">Não é permitido edição desse valor por uma questão de integridade.</small>
+                        </div>
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Email do usuário" value="<%= user.email %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Nova senha</label>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Nova senha do usuário">
+                        <small class="form-text text-warning">Se não for alterar a senha, deixe esse espaço vazio.</small>
+                    </div>
+                    <input type="hidden" name="id" value="<%= user.id %>">
+                    <button type="submit" class="btn btn-success">Atualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<%- include('../../partials/footer') %>

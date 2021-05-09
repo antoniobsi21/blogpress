@@ -1,0 +1,32 @@
+<%- include('../../partials/header') %>
+
+<body>
+    <%- include('../../partials/navbar') %>
+
+    <div class="container">
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                <h2>Edição de categoria</h2>
+            </div>
+
+            <div class="card-body">
+                <form action="/categories/update" method="POST">
+                    <div class="form-group">
+                        <label for="id">ID</label>
+                        <input type="text" id="id" class="form-control" placeholder="ID da categoria" value="<%= category.id %>" disabled>
+                        <small class="form-text text-danger">Não é permitido edição desse valor por uma questão de integridade.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Título</label>
+                        <input type="text" name="title" id="title" class="form-control" placeholder="Título da categoria" value="<%= category.title %>">
+                    </div>
+                    <input type="hidden" name="id" value="<%= category.id %>">
+                    <button type="submit" class="btn btn-success">Atualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<%- include('../../partials/footer') %>
