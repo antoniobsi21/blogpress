@@ -1,14 +1,14 @@
-# guiapress
+# BlogPress
 A CRUD project using Node.JS, Express, EJS, Sequelize, etc.
 
 ## Database
-The project was built using **MySQL** and it requires a database called guiapress. This can be configured in the file "**/database/database.js**".
+The project was built using **MySQL** and it requires a database called blogpress. This can be configured in the file "**/database/database.js**".
 
 **database/database.js**
 ```
 const { Sequelize } = require('sequelize');
 
-const connection = new Sequelize('guiapress', 'root', '', {
+const connection = new Sequelize('blogpress', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
     timezone: '-03:00'
