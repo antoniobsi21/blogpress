@@ -48,6 +48,25 @@ app.use('/', categoriesController);
 app.use('/', articlesController);
 app.use('/', usersController);
 
+const bcrypt = require('bcryptjs');
+const User = require('./users/User');
+
+let salt = bcrypt.genSaltSync();
+let hash = bcrypt.hashSync('admin', salt);
+
+// This creates the system first user with email "admin@admin.com" and password "admin"
+User.findOrCreate({
+    where: { email: 'admin@admin.com' },
+    defaults: { password: hash }
+}).then(([user, created]) => {
+    if(created) {
+        console.log('Admin user created');
+    }
+    //console.log(user.get({ plain: true }));
+}).catch(error => {
+    console.log('Error creating Admin', error);
+});
+
 app.get('/', (req, res) => {
     res.redirect('articles/page/1');
 });
